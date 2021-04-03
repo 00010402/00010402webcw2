@@ -3,19 +3,13 @@ include header.pug
 main.allemployees
   .container
     .row
-
-
       each employee in employees
-        
-
-
-      //-  .card
-      //-    .content
-      //-      img(src='/static/images/employee.jpg' alt='person')
-      //-      h3 employee
-      //-      .buttons
-      //-        a(href='/employeedetail') MORE
-      //-        a.delete(href='#!') DELETE
-        
+        .card
+          .content
+            img(src='/static/images/employee.jpg' alt='person')
+            h3= employee.em_name
+            .buttons
+              a(href=`/allemployees/employeedetail/${ employee.id }`) MORE
+              a.delete(href='#!') DELETE
 
 include footer.pug

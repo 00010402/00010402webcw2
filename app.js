@@ -54,10 +54,16 @@ app.post('/addemployee', (req, res) => {
 })
 
 
-const employees = ['em1', 'em2']
 
 app.get('/allemployees', (req, res) => {
-    res.render('allemployees', { employee: employees })
+
+    fs.readFile('./data/employees.json', (err, data) => {
+        if (err) throw err
+
+        const employees = JSON.parse(data)
+        res.render('allemployees', { employees: employees })
+
+    })
 })
 
 
@@ -70,7 +76,9 @@ app.get('/contact', (req, res) => {
 
 
 
-app.get('/employeedetail', (req, res) => {
+app.get('/allemployees/:id', (req, res) => {
+    const id = req.params.id
+
     res.render('employeedetail')
 })
 
