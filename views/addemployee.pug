@@ -1,0 +1,33 @@
+include header.pug
+
+main.addemployee
+  .container
+    form(action='')
+      .block
+        label(for='name')
+          span Name
+          input#name(type='text' name='name' required='')
+        label(for='surname')
+          span Surname
+          input#surname(type='text' name='surname' required='')
+        label(for='address')
+          span Address
+          input#address(type='text' name='address' required='')
+        label(for='dob')
+          span Date of Birth
+          input#dob(type='date' name='dob' required='')
+      .block
+        label(for='desc')
+          span Brief story
+          textarea#desc(name='briefdesc')
+        label(for='job')
+          span Wanted Job
+          input#job(type='text' name='job' required='')
+        label(for='image')
+          span Image
+          input#image(type='file' name='image' required='')
+      button(type='submit') Submit
+
+
+include footer.pug
+
