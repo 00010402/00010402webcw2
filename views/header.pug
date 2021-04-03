@@ -1,0 +1,21 @@
+doctype html
+
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  link(href='/static/styles/main.css' rel='stylesheet')
+  link(rel='preconnect' href='https://fonts.gstatic.com')
+  link(href='https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;300;400;700&display=swap' rel='stylesheet')
+  title 00010402 Web application
+body 
+  header
+    .container.navigation
+      a.logo(href='/')
+        img(src='/static/images/logo.png' alt='logo')
+      ul.navigation-links
+        li
+          a(href='/allemployees') All employees
+        li
+          a(href='/addemployee') Add employee
+
+  //- block content
