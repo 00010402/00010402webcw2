@@ -380,6 +380,7 @@ main.employeedetail .container li {
 }
 
 main.employeedetail .container .list-content {
+	flex-grow: 1;
 	padding: 20px;
 	width: auto;
 }
