@@ -18,11 +18,6 @@ const storageConfig = multer.diskStorage({
 });
 const upload = multer({ storage: storageConfig })
 
-
-
-const deletee = require("./routes/delete.js");
-
-
 // dev process
 app.use(express.json())
 app.use('/static/styles', express.static('public/styles'))
@@ -80,7 +75,6 @@ app.get('/allemployees', (req, res) => {
 
 
 const DbContext = require("./services/db")
-
 const dbc = new DbContext()
 dbc.useCollection("employees.json")
 
@@ -95,9 +89,6 @@ app.get('/contact', (req, res) => {
     res.render('contact')
 })
 
-
-
-
 app.get('/allemployees/:id', (req, res) => {
     const id = req.params.id
 
@@ -110,6 +101,15 @@ app.get('/allemployees/:id', (req, res) => {
         res.render('employeedetail', { employee: employee })
     })
 })
+
+app.get('/api/v1/employees', (req, res) => {
+    fs.readFile('./data/employees.json', (err, data) => {
+        if (err) throw err
+        const employees = JSON.parse(data)
+        res.json(employees)
+    })
+})
+
 
 app.listen(5050, err => {
     if (err) throw err
