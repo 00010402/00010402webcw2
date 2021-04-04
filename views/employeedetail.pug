@@ -2,7 +2,7 @@ include header.pug
 
 main.employeedetail
   .container
-    img(src='/static/images/employee.jpg' alt='person')
+    img(src=`/static/images/${ employee.em_img }` alt='person')
     ul.list
       li Name:
       li Surname:

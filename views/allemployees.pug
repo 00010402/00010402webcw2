@@ -6,7 +6,7 @@ main.allemployees
       each employee in employees
         .card
           .content
-            img(src='/static/images/employee.jpg' alt='person')
+            img(src=`/static/images/${ employee.em_img }` alt='person')
             h3= employee.em_name
             .buttons
               a(href=`/allemployees/${ employee.id }`) MORE
