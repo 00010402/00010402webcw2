@@ -31,6 +31,7 @@ app.get('/', (req, res) => {
 app.get('/addemployee', (req, res) => {
     res.render('addemployee')
 })
+
 app.post('/addemployee', upload.single('file'), (req, res) => {
     // const image = req.body.image
 
