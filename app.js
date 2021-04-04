@@ -1,10 +1,24 @@
 const express = require('express')
+const multer = require('multer')
+const path = require('path')
 const app = express()
 const fs = require('fs')
 
 app.set('view engine', 'pug')
 
-const DB = './data/employees.json'
+// const __dirname = path.resolve()
+const DB = path.resolve(__dirname, './data/employees.json')
+const storageConfig = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, 'public/images'));
+    },
+    filename: (req, file, cb) => {
+        cb(null, idgenerator() + file.originalname);
+    }
+});
+const upload = multer({ storage: storageConfig })
+
+
 
 // dev process
 app.use('/static/styles', express.static('public/styles'))
@@ -18,39 +32,35 @@ app.get('/', (req, res) => {
 app.get('/addemployee', (req, res) => {
     res.render('addemployee')
 })
-app.post('/addemployee', (req, res) => {
+app.post('/addemployee', upload.single('file'), (req, res) => {
+    // const image = req.body.image
 
-    const name = req.body.name
-    const surname = req.body.surname
-    const address = req.body.address
-    const dob = req.body.dob
-    const briefdesc = req.body.briefdesc
-    const job = req.body.job
-    // const image = req.body.image.filename
+    if (req.body) {
 
-    fs.readFile('./data/employees.json', (err, data) => {
-        if (err) throw err
-
-        const employees = JSON.parse(data)
-
-        employees.push({
-            id: idgenerator(),
-            em_name: name,
-            em_surname: surname,
-            em_address: address,
-            em_dob: dob,
-            em_briefstory: briefdesc,
-            em_job: job,
-            // em_img: image
-        })
-
-        fs.writeFile('./data/employees.json', JSON.stringify(employees), err => {
+        fs.readFile(DB, (err, data) => {
             if (err) throw err
 
+            const employees = JSON.parse(data)
 
-            res.render('addemployee', { success: true })
+            employees.push({
+                id: idgenerator(),
+                em_name: req.body.name,
+                em_surname: req.body.surname,
+                em_address: req.body.address,
+                em_dob: req.body.dob,
+                em_briefstory: req.body.briefdesc,
+                em_job: req.body.job,
+                em_img: req.file.filename
+            })
+
+            fs.writeFile(DB, JSON.stringify(employees), (err) => {
+                if (err) throw err
+
+
+                res.render('addemployee', { success: true })
+            })
         })
-    })
+    }
 })
 
 app.get('/allemployees', (req, res) => {

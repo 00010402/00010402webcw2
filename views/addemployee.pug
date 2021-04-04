@@ -2,7 +2,7 @@ include header.pug
 
 main.addemployee
   .container
-    form(action='/addemployee' method='POST')
+    form(action='/addemployee' method='POST'  enctype='multipart/form-data')
       .block
         label(for='name')
           span Name
@@ -25,7 +25,7 @@ main.addemployee
           input#job(type='text' name='job' required='')
         label(for='image')
           span Image
-          input#image(type='file' name='image' required='')
+          input#image(type='file' name='file' required='')
       button(type='submit') Submit
 
       if success
