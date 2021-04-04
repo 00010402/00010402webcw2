@@ -20,7 +20,11 @@ const upload = multer({ storage: storageConfig })
 
 
 
+const deletee = require("./routes/delete.js");
+
+
 // dev process
+app.use(express.json())
 app.use('/static/styles', express.static('public/styles'))
 app.use('/static/images', express.static('public/images'))
 app.use(express.urlencoded({ extended: false }))
@@ -75,7 +79,17 @@ app.get('/allemployees', (req, res) => {
 })
 
 
+const DbContext = require("./services/db")
 
+const dbc = new DbContext()
+dbc.useCollection("employees.json")
+
+app.get('/:id/delete', (req, res) => {
+    dbc.deleteOne(
+        req.params.id,
+        () => res.redirect('/')),
+        () => res.sendStatus(500)
+})
 
 app.get('/contact', (req, res) => {
     res.render('contact')
@@ -96,65 +110,6 @@ app.get('/allemployees/:id', (req, res) => {
         res.render('employeedetail', { employee: employee })
     })
 })
-
-// app.post('/create', (req, res) => {
-//     const title = req.body.title
-//     const desc = req.body.desc
-
-//     if (title.trim() !== '' && desc.trim() !== '') {
-
-//         fs.readFile(DB, (err, data) => {
-//             if (err) throw err
-
-//             const notes = JSON.parse(data)
-
-//             notes.push({
-//                 id: id(),
-//                 title: title,
-//                 description: desc,
-//             })
-
-//             fs.writeFile(DB, JSON.stringify(notes), err => {
-//                 if (err) throw err
-
-//                 res.render('create', { success: true })
-//             })
-
-//         })
-
-//     } else {
-//         res.render('create', { error: true })
-//     }
-// })
-
-
-// app.get('/notes', (req, res) => {
-
-//     fs.readFile(DB, (err, data) => {
-//         if (err) throw err
-
-//         const notes = JSON.parse(data)
-
-//         res.render('notes', { noteList: notes })
-//     })
-// })
-
-// app.get('/notes/:id', (req, res) => {
-
-//     const id = req.params.id
-
-//     fs.readFile(DB, (err, data) => {
-//         if (err) throw err
-
-//         const notes = JSON.parse(data)
-
-//         const note = notes.filter(note => note.id == id)[0]
-
-//         res.render('detail', { noteDetail: note })
-
-
-//     })
-// })
 
 app.listen(5050, err => {
     if (err) throw err

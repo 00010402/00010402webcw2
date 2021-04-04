@@ -10,6 +10,6 @@ main.allemployees
             h3= employee.em_name
             .buttons
               a(href=`/allemployees/${ employee.id }`) MORE
-              a.delete(href=`#!`) DELETE
+              a.delete(href=`/${ employee.id }/delete`) DELETE
 
 include footer.pug
