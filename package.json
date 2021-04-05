@@ -6,8 +6,16 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/00010402/00010402webcw2.git"
+	},
 	"author": "00010402",
 	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/00010402/00010402webcw2/issues"
+	},
+	"homepage": "https://github.com/00010402/00010402webcw2#readme",
 	"dependencies": {
 		"express": "^4.17.1",
 		"multer": "^1.4.2",
