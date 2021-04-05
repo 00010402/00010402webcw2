@@ -17,5 +17,15 @@ body
           a(href='/allemployees') All employees
         li
           a(href='/addemployee') Add employee
+        .toggler
+
+script.
+  var togglerelement = document.getElementsByClassName('toggler')
+  var toggler = togglerelement[0]
+  var navelement = document.getElementsByClassName('navigation-links')
+  var nav = navelement[0]
+  toggler.onclick = function() {
+  nav.classList.toggle('opened');
+  }
 
   //- block content
