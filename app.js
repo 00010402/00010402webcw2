@@ -6,7 +6,6 @@ const fs = require('fs')
 
 app.set('view engine', 'pug')
 
-// const __dirname = path.resolve()
 const DB = path.resolve(__dirname, './data/employees.json')
 const storageConfig = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -24,17 +23,23 @@ app.use('/static/styles', express.static('public/styles'))
 app.use('/static/images', express.static('public/images'))
 app.use(express.urlencoded({ extended: false }))
 
+
+// HOME PAGE DEPENDED CODE
 app.get('/', (req, res) => {
     res.render('index')
 })
 
+// CONTACT PAGE DEPENDED CODE
+app.get('/contact', (req, res) => {
+    res.render('contact')
+})
+
+// ADDEMPLOYEE DEPENDED CODE
 app.get('/addemployee', (req, res) => {
     res.render('addemployee')
 })
-
 app.post('/addemployee', upload.single('file'), (req, res) => {
-    // const image = req.body.image
-
+    // creating new employee
     if (req.body) {
 
         fs.readFile(DB, (err, data) => {
@@ -63,6 +68,7 @@ app.post('/addemployee', upload.single('file'), (req, res) => {
     }
 })
 
+// ALLEMPLOYEES DEPENDED CODE
 app.get('/allemployees', (req, res) => {
 
     fs.readFile('./data/employees.json', (err, data) => {
@@ -74,7 +80,7 @@ app.get('/allemployees', (req, res) => {
     })
 })
 
-
+// EMPLOYEE DELETE DEPENDED CODE
 const DbContext = require("./services/db")
 const dbc = new DbContext()
 dbc.useCollection("employees.json")
@@ -86,10 +92,8 @@ app.get('/:id/delete', (req, res) => {
         () => res.sendStatus(500)
 })
 
-app.get('/contact', (req, res) => {
-    res.render('contact')
-})
 
+// SINGLE EMPLYEE DEPENDED CODE
 app.get('/allemployees/:id', (req, res) => {
     const id = req.params.id
 
@@ -103,6 +107,7 @@ app.get('/allemployees/:id', (req, res) => {
     })
 })
 
+// REST API DEPENDED CODE
 app.get('/api/v1/employees', (req, res) => {
     fs.readFile('./data/employees.json', (err, data) => {
         if (err) throw err
@@ -111,13 +116,11 @@ app.get('/api/v1/employees', (req, res) => {
     })
 })
 
-
+// LISTENING THE PROJECT CODE
 app.listen(5050, err => {
     if (err) throw err
-
-    console.log('App is running on port 5050...')
+    console.log('App is running on port http://localhost:5050/')
 })
-
 
 function idgenerator() {
     return '_' + Math.random().toString(36).substr(2, 9);
